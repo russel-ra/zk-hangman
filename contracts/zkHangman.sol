@@ -1,17 +1,16 @@
 pragma solidity ^0.8.0;
 
-import "./verifier.sol";
+import "./GuessVerifier.sol";
+import "./InitVerifier.sol";
 
 contract zkHangman {
-    Verifier public immutable initVerifier;
-    Verifier public immutable guessVerifier;
-
-    uint public constant MAX_INVALID_GUESSES = 6;
+    InitVerifier public initVerifier;
+    GuessVerifier public guessVerifier;
 
     address public host;
     address public player;
 
-    uint public playerLives = MAX_INVALID_GUESSES;
+    uint public playerLives = 6;
     uint public secretHash;
     uint public correctGuesses;
     uint public turn;
@@ -24,8 +23,8 @@ contract zkHangman {
     constructor(address _host, address _player, address _initVerifier, address _guessVerifier) {
         host = _host;
         player = _player;
-        initVerifier = Verifier(_initVerifier);
-        guessVerifier = Verifier(_guessVerifier); 
+        initVerifier = InitVerifier(_initVerifier);
+        guessVerifier = GuessVerifier(_guessVerifier); 
     } 
 
     modifier gameNotOver() {
