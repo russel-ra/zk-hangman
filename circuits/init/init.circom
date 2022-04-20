@@ -18,7 +18,7 @@ template init() {
     for (var i = 0; i < 5; i++) {
         leqt[i] = LessEqThan(32);
         leqt[i].in[0] <== char[i];
-        leqt[i].in[1] <== 26; 
+        leqt[i].in[1] <== 25; 
 
         leqt[i].out === 1;
 
