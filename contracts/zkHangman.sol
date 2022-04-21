@@ -20,6 +20,8 @@ contract zkHangman {
     uint[] public guesses;
     uint[5] public characterHashes;
     uint[5] public revealedChars;
+
+    event NextTurn(uint nextTurn);
     
     constructor(address _host, address _player, address _initVerifier, address _guessVerifier) {
         host = _host;
@@ -58,6 +60,8 @@ contract zkHangman {
         }
 
         turn++;
+
+        emit NextTurn(turn);
     }
 
     function playerGuess(uint _guess) external gameNotOver {
@@ -73,6 +77,8 @@ contract zkHangman {
         guesses.push(_guess);
 
         turn++; 
+
+        emit NextTurn(turn);
     }
 
     // input[0] contains the hash of the secret
@@ -111,5 +117,7 @@ contract zkHangman {
         }
 
         turn++;
+
+        emit NextTurn(turn);
     }
 }
