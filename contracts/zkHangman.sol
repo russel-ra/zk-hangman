@@ -1,7 +1,7 @@
 pragma solidity ^0.8.0;
 
+import {InitVerifier} from "./InitVerifier.sol";
 import "./GuessVerifier.sol";
-import "./InitVerifier.sol";
 
 contract zkHangman {
     InitVerifier public initVerifier;
@@ -17,18 +17,23 @@ contract zkHangman {
 
     bool public gameOver;
 
-    uint[26] public guesses;
+    uint[] public guesses;
     uint[5] public characterHashes;
+    uint[5] public revealedChars;
     
     constructor(address _host, address _player, address _initVerifier, address _guessVerifier) {
         host = _host;
         player = _player;
         initVerifier = InitVerifier(_initVerifier);
         guessVerifier = GuessVerifier(_guessVerifier); 
+
+        for (uint i = 0; i < revealedChars.length; i++) {
+            revealedChars[i] = 99; // we'll use 99 to indicate that a char has not been revealed yet
+        }
     } 
 
     modifier gameNotOver() {
-        require(!gameOver, "the game is over!");
+        require(!gameOver, "the game is over");
         _;
     }
 
@@ -46,10 +51,10 @@ contract zkHangman {
         require(turn == 0, "invalid turn");
         require(initVerifier.verifyProof(_a, _b, _c, _input), "invalid proof");
 
-        secretHash = input[0];
+        secretHash = _input[0];
 
-        for(uint i = 1; i < input.length; i++) {
-            characterHashes[i] = input[i];
+        for(uint i = 1; i < _input.length; i++) {
+            characterHashes[i-1] = _input[i];
         }
 
         turn++;
@@ -61,11 +66,11 @@ contract zkHangman {
         require(turn % 2 == 1, "invalid turn");
         require(_guess >= 0 && _guess <= 25, "invalid guess");
 
-        for (uint i = 0; i < (turn - 1) / 2; i++) {
+        for (uint i = 0; i < guesses.length; i++) {
             require(guesses[i] != _guess, "invalid guess");
         }
 
-        guesses[(turn - 1) / 2] = _guess;
+        guesses.push(_guess);
 
         turn++; 
     }
@@ -81,7 +86,7 @@ contract zkHangman {
         ) external gameNotOver {
         require(msg.sender == host, "invalid caller");
         require(turn != 0 && turn % 2 == 0, "invalid turn");
-        require(_input[2] == guesses[turn / 2 - 1], "invalid character");
+        require(_input[2] == guesses[guesses.length-1], "invalid character");
         require(_input[0] == secretHash, "invalid secret");
         require(guessVerifier.verifyProof(_a, _b, _c, _input), "invalid proof");
 
@@ -90,6 +95,7 @@ contract zkHangman {
 
         for (uint i = 0; i < characterHashes.length; i++) {
             if (_input[1] == characterHashes[i]) {
+                revealedChars[i] = _input[1];
                 incorrectGuess = false;
                 correctGuesses++; // this is fine since the player cannot guess the same character twice
             }
