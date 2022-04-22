@@ -101,7 +101,7 @@ contract zkHangman {
 
         for (uint i = 0; i < characterHashes.length; i++) {
             if (_input[1] == characterHashes[i]) {
-                revealedChars[i] = _input[1];
+                revealedChars[i] = _input[2];
                 incorrectGuess = false;
                 correctGuesses++; // this is fine since the player cannot guess the same character twice
             }
