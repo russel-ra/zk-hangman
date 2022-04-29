@@ -1,5 +1,6 @@
 # DISCLAIMER
-This is an MVP and as such has very little polish and missing features.
+This is an MVP and as such has very little polish and missing features. See the potential
+improvements section below for ways in which this project could be made better. 
 
 # zk-hangman
 Circuits and contracts for zk-hangman.  
@@ -38,3 +39,9 @@ stored on-chain, then we know the guess was invalid and the player's life is ded
 The process described above continues until the player has run out of all 6 lives OR the player
 finally guesses all characters in the word correctly. In the former case, the host wins in
 the latter, the player. 
+
+# Potential improvements
+- Accept variable length words with a maximum and minimum range (e.g. minimum 5 maximum 12)
+- Add input validation to the frontend so the user does not enter invalid inputs and cause the contract to revert
+- Add a game over screen to the frontend. 
+- General UI/UX improvements
