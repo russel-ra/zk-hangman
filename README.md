@@ -21,7 +21,7 @@ up the word the player will try to guess, and a secret number. We will see why w
 secret number later. The proof circuit takes in the 5 characters as integers from 0-25 
 representing each letter of the alphabet from a to z. It then outputs 5 character hashes
 which are hashes of the character (represented as an integer from 0-25) and the secret that 
-the user inputted. It also outputs the hash of the secret which we will use later. All these
+the host inputted. It also outputs the hash of the secret which we will use later. All these
 hashes are stored on-chain on the smart contract. 
 
 It is then the player's turn. The player must submit a character (represented as an integer
