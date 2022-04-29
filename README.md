@@ -29,12 +29,13 @@ from 0-25) as their guess. It must be a character that has not been guessed befo
 user submits their guess, control is passed to the host to process the guess.
 
 The host processes the guess by submitting a proof that takes in the latest guess by the player
-as a public input and the secret as a private input. The proof outputs a hash of the input by the 
-player plus the secret and a hash of the secret on its own. By doing so, we can compare the secret
-hash with the one stored on-chain to ensure that the host really did use the secret they initially
-set. We can tell if the guess was valid, by looking at its hash (with the secret) and comparing
-it to all the other character hashes stored on-chain. If the hash matches none of the ones
-stored on-chain, then we know the guess was invalid and the player's life is deducted by one.
+as a public input and the secret as a private input. The proof outputs a hash of the most recent 
+guess by the player plus the secret and a hash of the secret on its own. By doing so, we can 
+compare the secret hash with the one stored on-chain to ensure that the host really did use the 
+secret they initially set. We can tell if the guess was valid, by looking at its hash (with the 
+secret) and comparing it to all the other character hashes stored on-chain. If the hash matches 
+none of the ones stored on-chain, then we know the guess was invalid and the player's life is 
+deducted by one.
 
 The process described above continues until the player has run out of all 6 lives OR the player
 finally guesses all characters in the word correctly. In the former case, the host wins in
