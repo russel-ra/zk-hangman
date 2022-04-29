@@ -38,8 +38,8 @@ none of the ones stored on-chain, then we know the guess was invalid and the pla
 deducted by one.
 
 The process described above continues until the player has run out of all 6 lives OR the player
-finally guesses all characters in the word correctly. In the former case, the host wins in
-the latter, the player. 
+finally guesses all characters in the word correctly. In the former case the host wins; in
+the latter case the player wins.
 
 # Potential improvements
 - Accept variable length words with a maximum and minimum range (e.g. minimum 5 maximum 12)
